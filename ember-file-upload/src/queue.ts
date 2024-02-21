@@ -190,6 +190,25 @@ export class Queue {
   }
 
   /**
+   * Get the URL of a fille from the queue
+   * @param file the file to retrieve the url from
+   */
+  @action
+  getUrl(file: UploadFile) {
+    // write function with the file reader api to get the url of the file
+    if(!file) {
+      return;
+    }
+  
+    return new Promise((resolve, reject) => {
+      let reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /**
    * Flushes the `files` property if they have settled. This
    * will only flush files when all files have arrived at a terminus
    * of their state chart (`uploaded` and `aborted`).
